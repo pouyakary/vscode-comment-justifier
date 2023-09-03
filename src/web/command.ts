@@ -20,8 +20,6 @@ export function justifyCurrentComment() {
         return;
     }
 
-    vscode.window.showInformationMessage(`Current line number: ${currentLine}`);
-
     let lines           = [ currentLineContent ];
     let startLineIndex  = currentLine - 1;
     let stopLineIndex   = currentLine + 1;

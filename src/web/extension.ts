@@ -5,8 +5,8 @@ import { justifyCurrentComment } from './command';
 // ─── Activation ────────────────────────────────────────────────────────── ✣ ─
 
 export function activate(context: vscode.ExtensionContext) {
-	let disposable = vscode.commands.registerCommand(
-		'justifier.justify-comment',
+	const disposable = vscode.commands.registerCommand(
+		'justifier.justify',
 		justifyCurrentComment,
 	);
 

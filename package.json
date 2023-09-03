@@ -13,10 +13,24 @@
   "contributes": {
     "commands": [
       {
-        "command": "justifier.justify-comment",
-        "title": "Justify Comment"
+        "command": "justifier.justify",
+        "title": "📐 Justify Comment"
       }
-    ]
+    ],
+    "keybindings": [
+        {
+            "command": "justifier.justify",
+            "key": "ctrl+alt+cmd+h",
+            "when": "editorTextFocus"
+        }
+    ],
+    "menus": {
+            "editor/context": [
+                {
+                    "command": "justifier.justify"
+                }
+            ]
+    }
   },
   "scripts": {
     "test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
