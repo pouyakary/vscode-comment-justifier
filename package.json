@@ -2,6 +2,7 @@
   "name": "justifier",
   "displayName": "justifier",
   "description": "Justify multiline comments",
+  "preview": true,
   "icon": "icon.png",
   "version": "0.0.1",
   "engines": {
