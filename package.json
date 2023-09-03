@@ -1,63 +1,72 @@
 {
-  "name": "justifier",
-  "displayName": "justifier",
-  "description": "Justify multiline comments",
-  "preview": true,
-  "icon": "icon.png",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.81.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "browser": "./dist/web/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "justifier.justify",
-        "title": "📐 Justify Comment"
-      }
+    "browser":         "./dist/web/extension.js",
+    "description":     "Justify multiline comments for readability.",
+    "displayName":     "justifier",
+    "icon":            "icon.png",
+    "name":            "justifier",
+    "preview":         true,
+    "version":         "0.0.1",
+    "repository": {
+      "url": "https://github.com/pouyakary/vscode-comment-justifier.git",
+      "type": "git"
+    },
+    "author": {
+        "email":       "kary@gnu.org",
+        "name":        "Pouya Kary",
+        "url":         "https://kary.us"
+    },
+    "engines": {
+        "vscode":      "^1.81.0"
+    },
+    "categories": [
+        "Other"
     ],
-    "keybindings": [
-        {
-            "command": "justifier.justify",
-            "key": "ctrl+alt+cmd+h",
-            "when": "editorTextFocus"
-        }
-    ],
-    "menus": {
+    "contributes": {
+        "commands": [
+            {
+                "command":     "justifier.justify",
+                "title":       "📐 Justify Comment"
+            }
+        ],
+        "keybindings": [
+            {
+                "command":     "justifier.justify",
+                "key":         "ctrl+alt+cmd+h",
+                "when":        "editorTextFocus"
+            }
+        ],
+        "menus": {
             "editor/context": [
                 {
-                    "command": "justifier.justify"
+                    "command":     "justifier.justify"
                 }
             ]
+        }
+    },
+    "scripts": {
+        "compile-web":             "webpack",
+        "lint":                    "eslint src --ext ts",
+        "package-web":             "webpack --mode production --devtool hidden-source-map",
+        "pretest":                 "npm run compile-web",
+        "run-in-browser":          "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. .",
+        "test":                    "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
+        "vscode:prepublish":       "npm run package-web",
+        "watch-web":               "webpack --watch"
+    },
+    "devDependencies": {
+        "@types/mocha":                        "^9.1.1",
+        "@types/vscode":                       "^1.81.0",
+        "@types/webpack-env":                  "^1.17.0",
+        "@typescript-eslint/eslint-plugin":    "^5.31.0",
+        "@typescript-eslint/parser":           "^5.31.0",
+        "@vscode/test-web":                    "^0.0.29",
+        "assert":                              "^2.0.0",
+        "eslint":                              "^8.20.0",
+        "mocha":                               "^10.0.0",
+        "process":                             "^0.11.10",
+        "ts-loader":                           "^9.3.1",
+        "typescript":                          "^4.7.4",
+        "webpack":                             "^5.74.0",
+        "webpack-cli":                         "^4.10.0"
     }
-  },
-  "scripts": {
-    "test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
-    "pretest": "npm run compile-web",
-    "vscode:prepublish": "npm run package-web",
-    "compile-web": "webpack",
-    "watch-web": "webpack --watch",
-    "package-web": "webpack --mode production --devtool hidden-source-map",
-    "lint": "eslint src --ext ts",
-    "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ."
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.81.0",
-    "@types/mocha": "^9.1.1",
-    "eslint": "^8.20.0",
-    "@typescript-eslint/eslint-plugin": "^5.31.0",
-    "@typescript-eslint/parser": "^5.31.0",
-    "mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "@vscode/test-web": "^0.0.29",
-    "ts-loader": "^9.3.1",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "@types/webpack-env": "^1.17.0",
-    "assert": "^2.0.0",
-    "process": "^0.11.10"
-  }
 }

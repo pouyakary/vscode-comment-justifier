@@ -1,65 +1,12 @@
-# justifier README
+# Comment Justifier
 
-This is the README for your extension "justifier". After writing up a brief description, we recommend including the following sections.
+This is the most basic version of a comment justifier, it is so basic and unsafe that you probably should not use, until I can make the time to build the system fully. It lets you justify comments to be less than 40 characters. I didn't include any option to change the size because I think it should enforce that length, the length makes sure that it is the easiest thing to read.
 
-## Features
+> **🧨 Very Important Remark** <br>
+> The current implementation doesn't have a markdown parser and
+> therefore is not safe for justifying structured markdown comments.
+> It will mess up the code blocks and other formatting that you might
+> have. Only use it on plain and simple comments like the Go's
+> simple comment system.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+To justify a comment, move your cursor over it and apply the command. It's called `Justify Commend` and the command is `control`+`option`+`command`+`h`. The (`h` in Dvorak layout is j and funny enough, the h and j on the keyboard sit very near each other, so the command is perfect for both QWERTY and Dvorak users)
