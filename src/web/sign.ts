@@ -1,13 +1,15 @@
-const oneLineCommentSigns = ['//', '///', '--', '#', ';;']
+const oneLineCommentSigns = [
+  '//', '///', '--', '#', ';;'
+]
 
 // ─── Detects The Start Of A Comment ────────────────────────────────────── ✣ ─
 
 export function detectStartOfTheComment(input: string): string | null {
-  const sign                  = detectCommentSign(input)
-  const regexp                = "^(?:\\s*\\n)*([ \\t]*" + sign + "+)"
-  const commentStartingRegExp = new RegExp(regexp)
-  const result                = commentStartingRegExp.exec(input)
-  const start                 = result?.[1] ?? null;
+  const sign    = detectCommentSign(input)
+  const regexp  = "^(?:\\s*\\n)*([ \\t]*" + sign + "+)"
+  const regExp  = new RegExp(regexp)
+  const result  = regExp.exec(input)
+  const start   = result?.[1] ?? null;
 
   if (start == null) {
     return null;
