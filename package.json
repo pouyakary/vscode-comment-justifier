@@ -5,7 +5,7 @@
     "icon":            "icon.png",
     "name":            "justifier",
     "preview":         true,
-    "version":         "0.0.1",
+    "version":         "0.0.2",
     "repository": {
         "type":    "git",
         "url":     "https://github.com/pouyakary/vscode-comment-justifier.git"
