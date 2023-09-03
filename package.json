@@ -5,6 +5,7 @@
     "icon":            "icon.png",
     "name":            "justifier",
     "preview":         true,
+    "publisher":       "karyfoundation",
     "version":         "0.0.2",
     "repository": {
         "type":    "git",
