@@ -11,4 +11,12 @@ This is the most basic version of a comment justifier, it is so basic and unsafe
 > have. Only use it on plain and simple comments like the Go's
 > simple comment system.
 
+> **🧨 Very Important Remark** <br>
+> This extension is only to test and develop the system. Once the
+> system is complete and I'm satisfied with it. (When it has been
+> battle tested for a while, and probably supports Markdown
+> Structures), It will be moved inside the
+> [Comment 6 Extension](https://marketplace.visualstudio.com/items?itemName=karyfoundation.comment)
+> And removed from here.
+
 To justify a comment, move your cursor over it and apply the command. It's called `Justify Commend` and the command is `control`+`option`+`command`+`h`. The (`h` in Dvorak layout is j and funny enough, the h and j on the keyboard sit very near each other, so the command is perfect for both QWERTY and Dvorak users)
