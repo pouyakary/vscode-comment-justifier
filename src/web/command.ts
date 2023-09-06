@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
-
 import { detectStartOfTheComment } from "./sign"
 import { justify } from './justification';
 
 // ─── Extract Comment ───────────────────────────────────────────────────── ✣ ─
 
-export function justifyCurrentComment() {
+export function
+justifyCurrentComment() {
     const editor      = vscode.window.activeTextEditor!;
     const currentLine = editor.selection.active.line;
     const document    = editor.document;
