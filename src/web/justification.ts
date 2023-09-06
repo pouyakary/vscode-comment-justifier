@@ -1,10 +1,13 @@
 import { detectStartOfTheComment } from "./sign"
 
+// ─── Constants ─────────────────────────────────────────────────────────── ✣ ─
+
 const maxLineSize = 40;
 
 // ─── Gets The Words Of The Comment ─────────────────────────────────────── ✣ ─
 
-function* extractChunks(lines: string[]): Generator<string> {
+function*
+extractChunks(lines: string[]): Generator<string> {
   for (const index in lines) {
     var line = lines[index]
     var line = line.replace(/^\s*\/+/, "")
@@ -19,7 +22,8 @@ function* extractChunks(lines: string[]): Generator<string> {
 
 // ─── Justifies A Given Comment ─────────────────────────────────────────── ✣ ─
 
-export function justify(input: string[]): string {
+export function
+justify(input: string[]): string {
   const lines 			    = new Array<string>()
   const commentStart 	  = detectStartOfTheComment(input[0])
   let   buffer          = ""
@@ -39,7 +43,5 @@ export function justify(input: string[]): string {
     lines.push(buffer);
   }
 
-  const result = commentStart + lines.join("\n" + commentStart);
-  console.log(result);
-  return result;
+  return (commentStart + lines.join("\n" + commentStart)).trimEnd();
 }
