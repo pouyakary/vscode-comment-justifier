@@ -53,24 +53,36 @@ extractChunks(lines: string[]): Generator<string> {
 
 export function
 justify(input: string[]): string {
-  const lines 			    = new Array<string>()
+  const lines 			    = new Array<Array<string>>()
   const commentStart 	  = detectStartOfTheComment(input[0])
-  let   buffer          = ""
+  let   buffer          = new Array<string>();
+  const bufferLength    = (): number => buffer.join(' ').length;
 
+  // Justifiying with basic logic
   for (const chunk of extractChunks(input)) {
-    if (buffer.length + chunk.length > maxLineSize) {
-      lines.push(buffer.trimEnd())
-      buffer = chunk + " "
+    if (bufferLength() + 1 + chunk.length > maxLineSize) {
+      lines.push(buffer)
+      buffer = new Array<string>();
     }
-
-    else {
-      buffer += chunk + " "
-    }
+    buffer.push(chunk);
   }
 
-  if (buffer != "") {
+  if (buffer.length > 0) {
     lines.push(buffer);
   }
 
-  return (commentStart + lines.join("\n" + commentStart)).trimEnd();
+  // handling the orphan word case.
+  let lastLine = lines[lines.length - 1];
+
+  if (lastLine.length == 1 && lines.length > 1) {
+    const lineToTheEnd = lines[lines.length - 2];
+
+    if (lineToTheEnd.length > 1) {
+      lines[lines.length - 1] = [lineToTheEnd.pop()!, ...lastLine];
+    }
+  }
+
+  // stringified lines
+  const stringifiedLines = lines.map(line => line.join(' '));
+  return (commentStart + stringifiedLines.join("\n" + commentStart)).trimEnd();
 }
