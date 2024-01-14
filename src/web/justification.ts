@@ -9,9 +9,9 @@
 // This  program  is free software: you can
 // redistribute it and/or modify  it  under
 // the  terms of the GNU General Public Li-
-// cense as published by the Free  Software
-// Foundation,  either version 3 of the Li-
-// cense,   or   (at   your   option)   any
+// cense as published by  the  Free  Softw-
+// are  Foundation, either version 3 of the
+// License,  or  (at   your   option)   any
 // later version.
 //
 // This  program is distributed in the hope
@@ -37,7 +37,8 @@ const emDash = '-';
 
 function
 escapeRegExp(string: string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // $& means the whole matched string
 }
 
 function
@@ -104,8 +105,15 @@ justify(input: string[]): string {
 
     if (lineSizeWithChunkAdded > maxLineSize) {
       const emptySize = maxLineSize - lineSizeWithChunkAdded + chunk.length
+      const emptyFactor = emptySize / buffer.length
+      const shouldSplitChunk = (
+        chunksReverse.length > 3 &&
+        chunk.length >= 6 &&
+        emptySize >= 4 &&
+        emptyFactor > 0.75 // this one is a magic number
+      );
 
-      if (chunksReverse.length > 3 && chunk.length >= 6 && emptySize >= 4) {
+      if (shouldSplitChunk) {
         splittedAChunk = true
         const [head, tail] = splitChunkInHalf(chunk, emptySize)
         chunksReverse.push(tail);

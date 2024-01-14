@@ -1,5 +1,7 @@
 # Change Log
 
+- `0.0.12` &mdash; added a new factor for breaking chunks that preserves many words.
+
 - `0.0.11` &mdash; Fixed some problems with the algorithm and added a system that reconnects broken chunks into their original version in the chunking algorithm.
 
 - `0.0.10` &mdash; Quick patch on breaking chunks and adding space in the last line.
