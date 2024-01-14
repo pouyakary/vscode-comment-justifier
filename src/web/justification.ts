@@ -1,26 +1,25 @@
-// Justifier    -   A   comment   justifier
-// extension for Visual  Studio  Code  that
-// justifies  the size of comments lines to
-// under 40 character for
-// better readability.
+// Justifier  - A comment justifier extens-
+// ion for Visual Studio Code that  justif-
+// ies  the size of comments lines to under
+// 40 character for better readability.
 //
 // (C) 2023-present Pouya Kary
 // <kary@gnu.org>
 //
 // This  program  is free software: you can
 // redistribute it and/or modify  it  under
-// the  terms  of  the  GNU  General Public
-// License  as  published   by   the   Free
-// Software Foundation, either version 3 of
-// the License, or  (at  your  option)  any
+// the  terms of the GNU General Public Li-
+// cense as published by the Free  Software
+// Foundation,  either version 3 of the Li-
+// cense,   or   (at   your   option)   any
 // later version.
 //
 // This  program is distributed in the hope
 // that it will be useful, but WITHOUT  ANY
-// WARRANTY;   without   even  the  implied
-// warranty of MERCHANTABILITY  or  FITNESS
-// FOR  A  PARTICULAR  PURPOSE. See the GNU
-// General Public License for more details.
+// WARRANTY;  without even the implied war-
+// ranty of MERCHANTABILITY or FITNESS  FOR
+// A  PARTICULAR PURPOSE. See the GNU Gene-
+// ral Public License for more details.
 //
 // You  should  have received a copy of the
 // GNU General Public  License  along  with
@@ -32,24 +31,43 @@ import { detectStartOfTheComment } from "./sign"
 // ─── Constants ─────────────────────────────────────────────────────────── ✣ ─
 
 const maxLineSize = 40;
+const emDash = '-';
 
 // ─── Gets The Words Of The Comment ─────────────────────────────────────── ✣ ─
 
 function
-extractChunks(lines: string[]): string[] {
+escapeRegExp(string: string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+function
+extractChunksStack(lines: string[], commentSign: string): string[] {
   const chunks = new Array<string>();
+  const regExp = new RegExp(`^\\s*${escapeRegExp(commentSign)}`);
+
+  let cachedSplittedWord = '';
 
   for (const index in lines) {
-    var line = lines[index]
-    var line = line.replace(/^\s*\/+/, "")
+    var line = lines[index];
+    var line = line.replace(regExp, "");
+    const lineParts = line.split(/\s+/);
 
-    for (const chunk of line.split(/\s+/)) {
+    for (let i = 0; i < lineParts.length; i++) {
+      const chunk = lineParts[i];
+
+      if (i === lineParts.length - 1 && chunk.endsWith(emDash)) {
+        cachedSplittedWord = chunk.substring(0, chunk.length - 1);
+        continue
+      }
+
       if (chunk != '') {
-        chunks.push(chunk);
+        chunks.push(cachedSplittedWord + chunk);
+        cachedSplittedWord = '';
       }
     }
   }
-  return chunks;
+
+  return chunks.reverse();;
 }
 
 // ─── Justifies A Given Comment ─────────────────────────────────────────── ✣ ─
@@ -72,10 +90,10 @@ splitChunkInHalf(chunk: string, availableSpace: number): [string, string] {
 export function
 justify(input: string[]): string {
   const lines 			    = new Array<Array<string>>()
-  const commentStart 	  = detectStartOfTheComment(input[0])
+  const commentStart 	  = detectStartOfTheComment(input[0]) ?? ''
   let   buffer          = new Array<string>();
   const bufferLength    = (): number => buffer.join(' ').length;
-  const chunksReverse   = extractChunks(input).reverse();
+  const chunksReverse   = extractChunksStack(input, commentStart)
 
   // Justifying with basic logic
   while (chunksReverse.length > 0) {
@@ -91,7 +109,7 @@ justify(input: string[]): string {
         splittedAChunk = true
         const [head, tail] = splitChunkInHalf(chunk, emptySize)
         chunksReverse.push(tail);
-        buffer.push(`${head}-`)
+        buffer.push(`${head}${emDash}`)
       }
 
       lines.push(buffer)
@@ -123,7 +141,6 @@ justify(input: string[]): string {
   return (commentStart + stringifiedLines.join("\n" + commentStart)).trimEnd();
 }
 
-
 // ─── Insert Spaces ─────────────────────────────────────────────────────── ✣ ─
 
 function
@@ -132,13 +149,13 @@ insertSpaces(lines: string[][]): string[] {
 
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
     const words = lines[lineIndex];
+    const spacesNeeded = words.length - 1;
 
-    if (lineIndex === lines.length - 1) {
+    if (lineIndex === lines.length - 1 || spacesNeeded >= 10) {
       resultLines.push(words.join(' '));
       continue;
     }
 
-    const spacesNeeded = words.length - 1;
     const spaces = new Array<string>();
     for (let j = 0; j < spacesNeeded; j++) {
       spaces.push('');
