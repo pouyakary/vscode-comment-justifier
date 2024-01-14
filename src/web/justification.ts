@@ -87,7 +87,7 @@ justify(input: string[]): string {
     if (lineSizeWithChunkAdded > maxLineSize) {
       const emptySize = maxLineSize - lineSizeWithChunkAdded + chunk.length
 
-      if (chunk.length >= 6 && emptySize >= 4) {
+      if (chunksReverse.length > 3 && chunk.length >= 6 && emptySize >= 4) {
         splittedAChunk = true
         const [head, tail] = splitChunkInHalf(chunk, emptySize)
         chunksReverse.push(tail);
@@ -147,9 +147,9 @@ insertSpaces(lines: string[][]): string[] {
     const lineLengthWithoutSpaces = words.join('').length;
     const emptySpaceSize = maxLineSize - lineLengthWithoutSpaces;
 
-    if (emptySpaceSize > 15) {
-      resultLines.push(words.join(' '));
-      continue;
+    if (lineIndex == lines.length - 1) {
+      resultLines.push(words.join(' '))
+      continue
     }
 
     let insertedSpaces = 0;

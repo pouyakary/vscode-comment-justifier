@@ -1,5 +1,7 @@
 # Change Log
 
+- `0.0.10` &mdash; Quick patch on breaking chunks and adding space in the last line.
+
 - `0.0.9` &mdash; An awesome new algorithm patch that breaks the chunks if the empty space is too much and makes the results really pretty.
 
 - `0.0.8` &mdash; The algorithm now justifies the words too. (the previous versions used to justify by left and keep spaces as they were, the new version inserts more spaces to make the lines equal)
