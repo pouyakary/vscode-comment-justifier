@@ -83,6 +83,57 @@ justify(input: string[]): string {
   }
 
   // stringified lines
-  const stringifiedLines = lines.map(line => line.join(' '));
+  const stringifiedLines = insertSpaces(lines);
   return (commentStart + stringifiedLines.join("\n" + commentStart)).trimEnd();
+}
+
+// ─── Insert Spaces ─────────────────────────────────────────────────────── ✣ ─
+
+function insertSpaces(lines: string[][]): string[] {
+  const resultLines = new Array<string>();
+
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    const words = lines[lineIndex];
+
+    if (lineIndex === lines.length - 1) {
+      resultLines.push(words.join(' '));
+      continue;
+    }
+
+    const spacesNeeded = words.length - 1;
+    const spaces = new Array<string>();
+    for (let j = 0; j < spacesNeeded; j++) {
+      spaces.push('');
+    }
+
+    const lineLengthWithoutSpaces = words.join('').length;
+    const emptySpaceSize = maxLineSize - lineLengthWithoutSpaces;
+
+    if (emptySpaceSize > 15) {
+      resultLines.push(words.join(' '));
+      continue;
+    }
+
+    let insertedSpaces = 0;
+    let counter = 0;
+
+    while(insertedSpaces < emptySpaceSize) {
+      spaces[counter++ % spacesNeeded] += ' ';
+      insertedSpaces++;
+    }
+
+    let result = '';
+
+    // We use this method here to as much as
+    // possible avoid rivers.
+    for (let j = 0; j < words.length - 1; j++) {
+      let spaceIndex = lineIndex % 2 === 0 ? j : spacesNeeded - j - 1;
+      result += words[j] + spaces[spaceIndex];
+    }
+    result += words[words.length - 1];
+
+    resultLines.push(result);
+  }
+
+  return resultLines;
 }

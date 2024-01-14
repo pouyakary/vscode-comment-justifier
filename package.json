@@ -6,7 +6,7 @@
     "name":            "justifier",
     "preview":         true,
     "publisher":       "karyfoundation",
-    "version":         "0.0.6",
+    "version":         "0.0.8",
     "repository": {
         "type":    "git",
         "url":     "https://github.com/pouyakary/vscode-comment-justifier.git"
