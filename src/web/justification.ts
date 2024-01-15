@@ -30,8 +30,8 @@ import { detectStartOfTheComment } from "./sign"
 
 // ─── Constants ─────────────────────────────────────────────────────────── ✣ ─
 
-const maxLineSize = 40;
-const emDash = '-';
+const maxLineSize = 42; // because!
+const emDash      = '-';
 
 // ─── Gets The Words Of The Comment ─────────────────────────────────────── ✣ ─
 
