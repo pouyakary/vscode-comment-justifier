@@ -156,7 +156,7 @@ insertSpaces(lines: string[][]): string[] {
   const resultLines = new Array<string>();
 
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-    const words = lines[lineIndex];
+    const words        = lines[lineIndex];
     const spacesNeeded = words.length - 1;
 
     if (lineIndex === lines.length - 1 || spacesNeeded >= 10) {
