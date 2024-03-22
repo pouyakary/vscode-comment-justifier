@@ -1,31 +1,28 @@
-// Justifier - A comment justifier
-// extension for Visual Studio Code that
-// justifies the size of comments lines to
-// under 40 character for better
-// readability.
+// Justifier  - A comment justifier extension
+// for Visual Studio Code that justifies  the
+// size   of   comments  lines  to  under  40
+// character for better readability.
 //
-// (C) 2023-present Pouya Kary
-// <kary@gnu.org>
+// (C) 2023-present Pouya Kary <kary@gnu.org>
 //
-// This program is free software: you can
-// redistribute it and/or modify it under
-// the terms of the GNU General Public
-// License as published by the Free
-// Software Foundation, either version 3 of
-// the License, or (at your option) any
-// later version.
+// This  program  is  free  software: you can
+// redistribute it and/or modify it under the
+// terms of the GNU General Public License as
+// published by the Free Software Foundation,
+// either  version  3  of the License, or (at
+// your option) any later version.
 //
-// This program is distributed in the hope
-// that it will be useful, but WITHOUT ANY
-// WARRANTY; without even the implied
-// warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE. See the GNU
-// General Public License for more details.
+// This  program  is  distributed in the hope
+// that it will be useful,  but  WITHOUT  ANY
+// WARRANTY;  without even the implied warra-
+// nty of MERCHANTABILITY or  FITNESS  FOR  A
+// PARTICULAR  PURPOSE.  See  the GNU General
+// Public License for more details.
 //
-// You should have received a copy of the
-// GNU General Public License along with
-// this program. If not, see
-// <https://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU
+// General Public  License  along  with  this
+// program.              If              not,
+// see <https://www.gnu.org/licenses/>.
 
 import * as vscode from 'vscode';
 import { justifyCurrentComment } from './command';
@@ -34,9 +31,35 @@ import { justifyCurrentComment } from './command';
 
 export function
 activate(context: vscode.ExtensionContext) {
+	// Registering the general comment command
 	context.subscriptions.push(
 		vscode.commands.registerCommand(
-			'justifier.justify',justifyCurrentComment));
+			'justifier.justify',justifyCurrentComment
+		)
+	);
+
+	// Registering  the  event based command that
+	// automatically applies changes when the user
+	// leaves the comment section.
+
+	/*
+	let previousLine = -1;
+    let disposable = vscode.window.onDidChangeTextEditorSelection(event => {
+        const activeEditor = vscode.window.activeTextEditor;
+
+        if (activeEditor) {
+            const currentLine = activeEditor.selection.active.line;
+
+            if (currentLine !== previousLine) {
+				justifyCurrentComment();
+            }
+
+            previousLine = currentLine;
+        }
+    });
+
+    context.subscriptions.push(disposable);
+	*/
 }
 
 // ─── Deactivation ──────────────────────────────────────────────────────── ✣ ─
