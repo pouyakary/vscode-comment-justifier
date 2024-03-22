@@ -24,25 +24,22 @@
 // program.              If              not,
 // see <https://www.gnu.org/licenses/>.
 
-import * as vscode from 'vscode';
-import { justifyCurrentComment } from './command';
+import * as vscode from "vscode";
+import { justifyCurrentComment } from "./command";
 
 // ─── Activation ────────────────────────────────────────────────────────── ✣ ─
 
-export function
-activate(context: vscode.ExtensionContext) {
-	// Registering the general comment command
-	context.subscriptions.push(
-		vscode.commands.registerCommand(
-			'justifier.justify',justifyCurrentComment
-		)
-	);
+export function activate(context: vscode.ExtensionContext) {
+  // Registering the general comment command
+  context.subscriptions.push(
+    vscode.commands.registerCommand("justifier.justify", justifyCurrentComment),
+  );
 
-	// Registering  the  event based command that
-	// automatically applies changes when the user
-	// leaves the comment section.
+  // Registering  the  event based command that
+  // automatically applies changes when the user
+  // leaves the comment section.
 
-	/*
+  /*
 	let previousLine = -1;
     let disposable = vscode.window.onDidChangeTextEditorSelection(event => {
         const activeEditor = vscode.window.activeTextEditor;
@@ -64,5 +61,4 @@ activate(context: vscode.ExtensionContext) {
 
 // ─── Deactivation ──────────────────────────────────────────────────────── ✣ ─
 
-export function
-deactivate() {}
+export function deactivate() {}

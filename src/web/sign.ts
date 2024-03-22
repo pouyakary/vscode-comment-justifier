@@ -27,19 +27,16 @@
 // this program. If not, see
 // <https://www.gnu.org/licenses/>.
 
-const oneLineCommentSigns = [
-  '//', '///', '--', '#', ';;', '*', '/**', '/*'
-]
+const oneLineCommentSigns = ["//", "///", "--", "#", ";;", "*", "/**", "/*"];
 
 // ─── Detects The Start Of A Comment ────────────────────────────────────── ✣ ─
 
-export function
-detectStartOfTheComment(input: string): string | null {
-  const sign    = detectCommentSign(input)
-  const regexp  = "^(?:\\s*\\n)*([ \\t]*" + sign + "+)"
-  const regExp  = new RegExp(regexp)
-  const result  = regExp.exec(input)
-  const start   = result?.[1] ?? null;
+export function detectStartOfTheComment(input: string): string | null {
+  const sign = detectCommentSign(input);
+  const regexp = "^(?:\\s*\\n)*([ \\t]*" + sign + "+)";
+  const regExp = new RegExp(regexp);
+  const result = regExp.exec(input);
+  const start = result?.[1] ?? null;
 
   if (start == null) {
     return null;
@@ -50,13 +47,12 @@ detectStartOfTheComment(input: string): string | null {
 
 // ─── Detects The Sign Of The Comment ───────────────────────────────────── ✣ ─
 
-function
-detectCommentSign(line: string): string {
+function detectCommentSign(line: string): string {
   for (const sign of oneLineCommentSigns) {
     if (line.trim().startsWith(sign)) {
-      return sign
+      return sign;
     }
   }
 
-  return ""
+  return "";
 }

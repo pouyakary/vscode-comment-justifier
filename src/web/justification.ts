@@ -26,27 +26,25 @@
 // this program. If not,
 // see <https://www.gnu.org/licenses/>.
 
-import { detectStartOfTheComment } from "./sign"
+import { detectStartOfTheComment } from "./sign";
 
 // ─── Constants ─────────────────────────────────────────────────────────── ✣ ─
 
 const maxLineSize = 42; // because!
-const emDash      = '-';
+const emDash = "-";
 
 // ─── Gets The Words Of The Comment ─────────────────────────────────────── ✣ ─
 
-function
-escapeRegExp(string: string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    // $& means the whole matched string
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // $& means the whole matched string
 }
 
-function
-extractChunksStack(lines: string[], commentSign: string): string[] {
+function extractChunksStack(lines: string[], commentSign: string): string[] {
   const chunks = new Array<string>();
   const regExp = new RegExp(`^\\s*${escapeRegExp(commentSign)}`);
 
-  let cachedSplittedWord = '';
+  let cachedSplittedWord = "";
 
   for (const index in lines) {
     var line = lines[index];
@@ -58,74 +56,74 @@ extractChunksStack(lines: string[], commentSign: string): string[] {
 
       if (i === lineParts.length - 1 && chunk.endsWith(emDash)) {
         cachedSplittedWord = chunk.substring(0, chunk.length - 1);
-        continue
+        continue;
       }
 
-      if (chunk != '') {
+      if (chunk != "") {
         chunks.push(cachedSplittedWord + chunk);
-        cachedSplittedWord = '';
+        cachedSplittedWord = "";
       }
     }
   }
 
-  return chunks.reverse();;
+  return chunks.reverse();
 }
 
 // ─── Justifies A Given Comment ─────────────────────────────────────────── ✣ ─
 
-function
-splitChunkInHalf(chunk: string, availableSpace: number): [string, string] {
-    // one  char for the space to be before the
-    // chunk and one for the hyphen after it.
-    const availableSpaceForChunk = availableSpace - 2
+function splitChunkInHalf(
+  chunk: string,
+  availableSpace: number,
+): [string, string] {
+  // one  char for the space to be before the
+  // chunk and one for the hyphen after it.
+  const availableSpaceForChunk = availableSpace - 2;
 
-    // trying to at least preserve 3 characters
-    // of the word
-    const headSize = Math.min(availableSpaceForChunk, chunk.length - 3)
+  // trying to at least preserve 3 characters
+  // of the word
+  const headSize = Math.min(availableSpaceForChunk, chunk.length - 3);
 
-    var firstHalf = chunk.substring(0, headSize);
-    var secondHalf = chunk.substring(headSize);
-    return [firstHalf, secondHalf];
+  var firstHalf = chunk.substring(0, headSize);
+  var secondHalf = chunk.substring(headSize);
+  return [firstHalf, secondHalf];
 }
 
-export function
-justify(input: string[]): string {
-  const lines 			    = new Array<Array<string>>()
-  const commentStart 	  = detectStartOfTheComment(input[0]) ?? ''
-  let   buffer          = new Array<string>();
-  const bufferLength    = (): number => buffer.join(' ').length;
-  const chunksReverse   = extractChunksStack(input, commentStart)
+export function justify(input: string[]): string {
+  const lines = new Array<Array<string>>();
+  const commentStart = detectStartOfTheComment(input[0]) ?? "";
+  let buffer = new Array<string>();
+  const bufferLength = (): number => buffer.join(" ").length;
+  const chunksReverse = extractChunksStack(input, commentStart);
 
   // Justifying with basic logic
   while (chunksReverse.length > 0) {
     const chunk = chunksReverse.pop()!;
     const lineSizeWithChunkAdded = bufferLength() + 1 + chunk.length;
 
-    let splittedAChunk = false
+    let splittedAChunk = false;
 
     if (lineSizeWithChunkAdded > maxLineSize) {
-      const emptySize = maxLineSize - lineSizeWithChunkAdded + chunk.length
-      const emptyFactor = emptySize / buffer.length
-      const shouldSplitChunk = (
+      const emptySize = maxLineSize - lineSizeWithChunkAdded + chunk.length;
+      const emptyFactor = emptySize / buffer.length;
+      const shouldSplitChunk =
         chunksReverse.length > 3 &&
         chunk.length >= 6 &&
         emptySize >= 4 &&
-        emptyFactor > 0.75 // this one is a magic number
-      );
+        emptyFactor > 0.75; // this one is a magic number
 
       if (shouldSplitChunk) {
-        splittedAChunk = true
-        const [head, tail] = splitChunkInHalf(chunk, emptySize)
+        splittedAChunk = true;
+        const [head, tail] = splitChunkInHalf(chunk, emptySize);
         chunksReverse.push(tail);
-        buffer.push(`${head}${emDash}`)
+        buffer.push(`${head}${emDash}`);
       }
 
-      lines.push(buffer)
+      lines.push(buffer);
       buffer = new Array<string>();
     }
 
     if (splittedAChunk === false) {
-     buffer.push(chunk);
+      buffer.push(chunk);
     }
   }
 
@@ -151,8 +149,7 @@ justify(input: string[]): string {
 
 // ─── Insert Spaces ─────────────────────────────────────────────────────── ✣ ─
 
-function
-insertSpaces(lines: string[][]): string[] {
+function insertSpaces(lines: string[][]): string[] {
   const resultLines = new Array<string>();
 
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
@@ -160,32 +157,32 @@ insertSpaces(lines: string[][]): string[] {
     const spacesNeeded = words.length - 1;
 
     if (lineIndex === lines.length - 1 || spacesNeeded >= 10) {
-      resultLines.push(words.join(' '));
+      resultLines.push(words.join(" "));
       continue;
     }
 
     const spaces = new Array<string>();
     for (let j = 0; j < spacesNeeded; j++) {
-      spaces.push('');
+      spaces.push("");
     }
 
-    const lineLengthWithoutSpaces = words.join('').length;
+    const lineLengthWithoutSpaces = words.join("").length;
     const emptySpaceSize = maxLineSize - lineLengthWithoutSpaces;
 
     if (lineIndex == lines.length - 1) {
-      resultLines.push(words.join(' '))
-      continue
+      resultLines.push(words.join(" "));
+      continue;
     }
 
     let insertedSpaces = 0;
     let counter = 0;
 
-    while(insertedSpaces < emptySpaceSize) {
-      spaces[counter++ % spacesNeeded] += ' ';
+    while (insertedSpaces < emptySpaceSize) {
+      spaces[counter++ % spacesNeeded] += " ";
       insertedSpaces++;
     }
 
-    let result = '';
+    let result = "";
 
     // We  use  this  method here to as much as
     // possible avoid rivers.
