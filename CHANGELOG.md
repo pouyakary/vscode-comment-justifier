@@ -1,6 +1,6 @@
 # Change Log
 
-- `0.0.2` &mdash; Now supporting `/* ... */` style of comments.
+- `0.0.3` &mdash; Now supporting `/* ... */` style of comments.
 
 - `0.0.12` &mdash; added a new factor for breaking chunks that preserves many words.
 
