@@ -29,11 +29,21 @@
 
 const oneLineCommentSigns = ["//", "///", "--", "#", ";;", "*", "/**", "/*"];
 
+function escapeRegExp(input: string): string {
+  return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 // ─── Detects The Start Of A Comment ────────────────────────────────────── ✣ ─
 
 export function detectStartOfTheComment(input: string): string | null {
   const sign = detectCommentSign(input);
-  const regexp = "^(?:\\s*\\n)*([ \\t]*" + sign + "+)";
+
+  if (sign == null) {
+    return null;
+  }
+
+  const escapedSign = escapeRegExp(sign);
+  const regexp = "^(?:\\s*\\n)*([ \\t]*" + escapedSign + "+)";
   const regExp = new RegExp(regexp);
   const result = regExp.exec(input);
   const start = result?.[1] ?? null;
@@ -47,12 +57,12 @@ export function detectStartOfTheComment(input: string): string | null {
 
 // ─── Detects The Sign Of The Comment ───────────────────────────────────── ✣ ─
 
-function detectCommentSign(line: string): string {
+function detectCommentSign(line: string): string | null {
   for (const sign of oneLineCommentSigns) {
     if (line.trim().startsWith(sign)) {
       return sign;
     }
   }
 
-  return "";
+  return null;
 }

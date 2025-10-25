@@ -6,7 +6,7 @@
     "name":            "justifier",
     "preview":         true,
     "publisher":       "karyfoundation",
-    "version":         "0.0.13",
+    "version":         "0.0.2",
     "repository": {
         "type":    "git",
         "url":     "https://github.com/pouyakary/vscode-comment-justifier.git"
@@ -29,7 +29,7 @@
         "commands": [
             {
                 "command":     "justifier.justify",
-                "title":       "🪭Justify Comment"
+                "title":       "🪭 Justify Comment"
             }
         ],
         "keybindings": [
